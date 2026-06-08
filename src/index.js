@@ -11,6 +11,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/teacher', require('./routes/teacher_route'));
+app.use('/auth', require('./routes/auth.routes'));
 app.use((req, res) => res.status(404).json({ error: 'Ruta no encontrada' }));
 app.use((err, req, res, next) => {
     console.error(err.stack);
