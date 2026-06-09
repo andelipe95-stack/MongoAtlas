@@ -4,14 +4,42 @@ const validate = require('../middleware/validator');
 const ctrl = require('../controllers/auth_controller');
 
 const reglasRegistro = [
-  body('email').trim().isEmail().withMessage('Email no válido').normalizeEmail(),
-  body('password').isLength({ min: 6 }).withMessage('Mínimo 6 caracteres'),
-  body('name').trim().notEmpty().withMessage('El nombre es obligatorio'),
-  body('role').optional().isIn(['admin', 'teacher', 'user']).withMessage('Rol no válido'),
+  body('email').trim().isEmail().withMessage('Email no válido').normalizeEmail(),
+  body('password').isLength({ min: 6 }).withMessage('Mínimo 6 caracteres'),
+  body('name').trim().notEmpty().withMessage('El nombre es obligatorio'),
+body('role').optional().isIn(['admin', 'teacher', 'user']).withMessage('Rol no válido'),
 ];
 const reglasLogin = [  body('email').trim().isEmail().withMessage('Email no válido').normalizeEmail(),  body('password').notEmpty().withMessage('La contraseña es obligatoria'),];
 
 router.post('/register', reglasRegistro, validate, ctrl.register);
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Inicia sesión y obtiene token
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email, password]
+ *             properties:
+ *               email: {type: string, example: "user@gmail.com"}
+ *               password: {type: string, example: "tu contraseña"}
+ *     responses:
+ *       200:
+ *         description: Login correcto
+ *       401:
+ *         description: Credenciales inválidas   
+ * 
+ *
+ * 
+ * 
+ */
+
+
 router.post('/login', reglasLogin, validate, ctrl.login);
 
 module.exports = router;

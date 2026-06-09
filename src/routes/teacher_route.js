@@ -15,9 +15,22 @@ const teacherValidation = [
     body('email').isEmail().withMessage('El correo electrónico es obligatorio y debe ser válido')
 ];
 
-router.use(authRequired);
 
-router.get("/{:email}",requireRole('teacher'), getTeacher); // dentro va '/', no '/admin'
+
+/**
+ * @swagger
+ * /teacher:
+ *   get:
+ *     summary: Lista todos los teachers
+ *     tags: [Teachers]
+ *     responses:
+ *       200:
+ *         description: Lista de teachers
+ */
+
+
+router.get("/{:email}",  getTeacher); // dentro va '/', no '/admin'
+router.use(authRequired);
 router.post('/', teacherValidation, validate, createTeacher);
 router.put('/:id', teacherValidation, validate, updateTeacher);
 router.delete("/:id", deleteadoTeacher);
