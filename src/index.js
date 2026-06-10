@@ -1,17 +1,11 @@
 const express = require('express');
-const { connectDB } = require('./config/db');
 const swaggerSchema = require('./docs/swagger');
 const swaggerUi = require('swagger-ui-express');
-require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 
-connectDB();
-
 //FUNCION LOGGER
-
-
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url} - ${new Date().toISOString()}`);
     next();
@@ -29,5 +23,4 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).json({ error: err.message || 'Error interno' });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log('Servidor levantado en ' + PORT));
+module.exports = app;
